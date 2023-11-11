@@ -19,16 +19,16 @@ class CaffeineMenuServiceImpl(
     }
 
     @Transactional
-    override fun deleteMenu(menuId: UUID) {
-        if (!caffeineMenuRepository.exists(menuId)) {
+    override fun deleteMenu(userId: UUID, menuName: String) {
+        if (!caffeineMenuRepository.exists(userId, menuName)) {
             throw MenuNotFoundException()
         }
-        caffeineMenuRepository.delete(menuId)
+        caffeineMenuRepository.delete(userId, menuName)
     }
 
     @Transactional
-    override fun getMenu(menuId: UUID): CaffeineMenu {
-        return caffeineMenuRepository.get(menuId)
+    override fun getMenu(userId: UUID, menuName: String): CaffeineMenu {
+        return caffeineMenuRepository.get(userId, menuName)
     }
 
     @Transactional

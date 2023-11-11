@@ -9,13 +9,9 @@ interface JpaCaffeineMenuRepository : JpaRepository<CaffeineMenuEntity, Caffeine
 
     fun findAllByUserId(userId: UUID): List<CaffeineMenuEntity>
 
-    fun findById(id: UUID): CaffeineMenuEntity?
-
-    fun existsById(id: UUID): Boolean
+    fun findByUserIdAndName(userId: UUID, name: String): CaffeineMenuEntity?
 
     fun existsByUserIdAndName(userId: UUID, name: String): Boolean
-
-    fun deleteById(id: UUID)
 
     fun deleteByUserIdAndName(userId: UUID, name: String)
 

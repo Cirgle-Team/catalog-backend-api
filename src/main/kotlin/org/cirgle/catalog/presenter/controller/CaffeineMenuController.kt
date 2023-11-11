@@ -33,7 +33,7 @@ class CaffeineMenuController(
         @RequestUser user: HttpUser,
         @Valid @RequestBody request: CaffeineMenuDeleteRequest
     ): APIResponse {
-        caffeineMenuService.deleteMenu(menuId = request.menuId)
+        caffeineMenuService.deleteMenu(user.id, request.menu)
 
         return APIResponse.ok(code = "success", message = "메뉴가 삭제되었습니다.")
     }

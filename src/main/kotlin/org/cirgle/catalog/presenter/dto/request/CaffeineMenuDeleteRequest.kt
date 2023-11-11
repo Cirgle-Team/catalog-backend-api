@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotBlank
 import java.util.*
 
 data class CaffeineMenuDeleteRequest(
-    @field:JsonProperty("menuId")
+    @field:JsonProperty("menu")
     @field:NotBlank(message = "invalid-001")
-    private val _menuId: String?,
+    private val _menu: String?,
 ) {
-    val menuId: UUID get() = UUID.fromString(_menuId!!)
+    val menu: String get() = _menu!!
 }

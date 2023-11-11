@@ -7,9 +7,9 @@ interface CaffeineMenuService {
 
     fun createMenu(userId: UUID, menu: CaffeineMenu)
 
-    fun deleteMenu(menuId: UUID)
+    fun deleteMenu(userId: UUID, menuName: String)
 
-    fun getMenu(menuId: UUID): CaffeineMenu
+    fun getMenu(userId: UUID, menuName: String): CaffeineMenu
 
     fun findMenuListByUserId(userId: UUID): List<CaffeineMenu>
 

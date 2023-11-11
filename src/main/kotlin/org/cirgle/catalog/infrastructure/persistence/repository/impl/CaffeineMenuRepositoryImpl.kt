@@ -21,21 +21,15 @@ class CaffeineMenuRepositoryImpl(
         jpaCaffeineMenuRepository.deleteByUserIdAndName(userId, menuName)
     }
 
-    override fun delete(menuId: UUID) {
-        jpaCaffeineMenuRepository.deleteById(menuId)
-    }
 
-    override fun get(menuId: UUID): CaffeineMenu {
-        return jpaCaffeineMenuRepository.findById(menuId)?.toDomain() ?: throw MenuNotFoundException()
+    override fun get(userId: UUID, menuName: String): CaffeineMenu {
+        return jpaCaffeineMenuRepository.findByUserIdAndName(userId, menuName)?.toDomain() ?: throw MenuNotFoundException()
     }
 
     override fun exists(userId: UUID, menuName: String): Boolean {
         return jpaCaffeineMenuRepository.existsByUserIdAndName(userId, menuName)
     }
 
-    override fun exists(menuId: UUID): Boolean {
-        return jpaCaffeineMenuRepository.existsById(menuId)
-    }
 
     override fun findAllByUserId(userId: UUID): List<CaffeineMenu> {
         return jpaCaffeineMenuRepository.findAllByUserId(userId).map {

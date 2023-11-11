@@ -9,13 +9,9 @@ interface CaffeineMenuRepository {
 
     fun delete(userId: UUID, menuName: String)
 
-    fun delete(menuId: UUID)
-
-    fun get(menuId: UUID): CaffeineMenu
+    fun get(userId: UUID, menuName: String): CaffeineMenu
 
     fun exists(userId: UUID, menuName: String): Boolean
-
-    fun exists(menuId: UUID): Boolean
 
     fun findAllByUserId(userId: UUID): List<CaffeineMenu>
 
