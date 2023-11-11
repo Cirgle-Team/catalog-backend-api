@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+#  thymeleaf:
+#    cache: false
+#    check-template-location: true
+#    prefix: classpath:/templates/
+#    suffix: .html
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bgm
+    username: root
+    password: 0528
+    hikari:
+      auto-commit: false
+      pool-name: spring-study-pool
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-timeout: 60000
+      max-lifetime: 1800000
+      idle-timeout: 60000
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+app:
+  headers:
+    auth-token: Authorization
+
+token:
+  secret: d43686425d28b6e5fa73a15992616b85a5a0278244d5a20a3a17ff3ff8de4cd4
+  expiration:
+    access: 86400
+    refresh: 604800
