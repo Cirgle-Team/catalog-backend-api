@@ -1,9 +1,6 @@
 package org.cirgle.catalog.domain.model
 
-import java.util.UUID
-
 data class CaffeineMenu(
-    val id: UUID,
     val type: MenuType,
     val name: String,
     val caffeine: Int,

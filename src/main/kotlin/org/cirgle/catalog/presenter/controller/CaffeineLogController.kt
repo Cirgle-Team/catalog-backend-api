@@ -1,8 +1,10 @@
 package org.cirgle.catalog.presenter.controller
 
 import org.cirgle.catalog.domain.exception.InvalidException
+import org.cirgle.catalog.domain.exception.MenuCaffeineException
 import org.cirgle.catalog.domain.exception.UserNotFoundException
 import org.cirgle.catalog.domain.model.CaffeineLogDetail
+import org.cirgle.catalog.domain.model.CaffeineMenu
 import org.cirgle.catalog.domain.model.TodayCaffeineLog
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.domain.service.CaffeineMenuService
@@ -14,6 +16,7 @@ import org.cirgle.catalog.presenter.dto.response.APIResponse
 import org.cirgle.catalog.presenter.dto.response.DailyCaffeineLogResponse
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/caffeine-log")
@@ -40,9 +43,12 @@ class CaffeineLogController(
         @RequestUser user: HttpUser,
         @RequestBody request: CaffeineMenuConsumeRequest,
     ): APIResponse {
-        val menu = caffeineMenuService.getMenu(request.menuId)
+        if (request.caffeine < 0 || request.caffeine > MAXIMUM_CAFFEINE) {
+            throw MenuCaffeineException()
+        }
+        val menu = request.toCaffeineMenu()
+        caffeineMenuService.createMenu(user.id, menu)
 
-        caffeineLogService.consumeCaffeineMenu(user.id, menu)
         return APIResponse.ok(code = "success", message = "카페인 메뉴 소비를 성공적으로 완료했습니다.")
     }
 
@@ -87,5 +93,16 @@ class CaffeineLogController(
         return DailyCaffeineLogResponse(
             caffeineLogs = caffeineLogService.findAllCaffeineLog(target.id, startDate, endDate)
         )
+    }
+
+    private fun CaffeineMenuConsumeRequest.toCaffeineMenu(): CaffeineMenu
+    = CaffeineMenu(
+        name = menu,
+        type = type,
+        caffeine = caffeine
+    )
+
+    companion object {
+        const val MAXIMUM_CAFFEINE = 1000
     }
 }

@@ -28,19 +28,6 @@ class CaffeineMenuController(
         )
     }
 
-    @PostMapping
-    fun createCaffeineMenu(
-        @RequestUser user: HttpUser,
-        @Valid @RequestBody request: CaffeineMenuCreateRequest
-    ): APIResponse {
-        if (request.caffeine < 0 || request.caffeine > MAXIMUM_CAFFEINE) {
-            throw MenuCaffeineException()
-        }
-        caffeineMenuService.createMenu(userId = user.id, menu = request.toCaffeineMenu())
-
-        return APIResponse.ok(code = "success", message = "메뉴가 추가되었습니다.")
-    }
-
     @DeleteMapping
     fun deleteCaffeineMenu(
         @RequestUser user: HttpUser,
@@ -51,12 +38,6 @@ class CaffeineMenuController(
         return APIResponse.ok(code = "success", message = "메뉴가 삭제되었습니다.")
     }
 
-    private fun CaffeineMenuCreateRequest.toCaffeineMenu() = CaffeineMenu(
-        id = UUID.randomUUID(),
-        name = name,
-        type = type,
-        caffeine = caffeine,
-    )
 
     private companion object {
         const val MAXIMUM_CAFFEINE = 1000

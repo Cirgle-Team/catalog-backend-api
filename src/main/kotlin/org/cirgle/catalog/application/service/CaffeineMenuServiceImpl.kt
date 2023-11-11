@@ -1,6 +1,5 @@
 package org.cirgle.catalog.application.service
 
-import org.cirgle.catalog.domain.exception.MenuAlreadyExistsException
 import org.cirgle.catalog.domain.exception.MenuNotFoundException
 import org.cirgle.catalog.domain.model.CaffeineMenu
 import org.cirgle.catalog.domain.repository.CaffeineMenuRepository
@@ -16,9 +15,6 @@ class CaffeineMenuServiceImpl(
 
     @Transactional
     override fun createMenu(userId: UUID, menu: CaffeineMenu) {
-        if (caffeineMenuRepository.exists(userId, menu.name)) {
-            throw MenuAlreadyExistsException()
-        }
         caffeineMenuRepository.create(userId, menu)
     }
 
