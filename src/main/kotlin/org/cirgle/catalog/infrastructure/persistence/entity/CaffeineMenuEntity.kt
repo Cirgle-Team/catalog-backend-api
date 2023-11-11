@@ -19,10 +19,6 @@ data class CaffeineMenuEntity(
     val name: String,
 
     @Column(nullable = false)
-    @JdbcTypeCode(SqlTypes.UUID)
-    val id: UUID,
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val type: MenuType,
 
@@ -30,7 +26,6 @@ data class CaffeineMenuEntity(
     val caffeine: Int,
 ) {
     fun toDomain() = CaffeineMenu(
-        id = this.id,
         type = this.type,
         name = this.name,
         caffeine = this.caffeine,

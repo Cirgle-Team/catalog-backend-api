@@ -18,7 +18,7 @@ class AuthController(
 ) {
     @PostMapping("/register")
     fun register(@Valid @RequestBody request: RegisterRequest): APIResponse {
-        val user = userService.register(request.displayId, request.password)
+        val user = userService.register(request.displayId, request.password, request.birthday)
         caffeineLogService.initializeCaffeineLog(user.id)
 
         return APIResponse.ok(code = "success", message = "회원가입이 완료되었습니다.")

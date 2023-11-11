@@ -44,7 +44,6 @@ class CaffeineMenuRepositoryImpl(
     }
 
     private fun CaffeineMenu.toEntity(userId: UUID) = CaffeineMenuEntity(
-        id = id,
         userId = userId,
         name = name,
         type = type,
