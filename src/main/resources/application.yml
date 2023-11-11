@@ -2,19 +2,19 @@ server:
   port: 8080
 
 spring:
-#  thymeleaf:
-#    cache: false
-#    check-template-location: true
-#    prefix: classpath:/templates/
-#    suffix: .html
+  #  thymeleaf:
+  #    cache: false
+  #    check-template-location: true
+  #    prefix: classpath:/templates/
+  #    suffix: .html
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/bgm
+    url: jdbc:mysql://127.0.0.1:3306/catalog
     username: root
-    password: 0528
+    password: xladbsl12
     hikari:
       auto-commit: false
-      pool-name: spring-study-pool
+      pool-name: catalog-pool
       minimum-idle: 10
       maximum-pool-size: 20
       connection-timeout: 60000
@@ -33,8 +33,11 @@ spring:
       ddl-auto: update
 
 app:
+  version: 1.0
   headers:
     auth-token: Authorization
+  settings:
+    default-max-caffeine: 300
 
 token:
   secret: d43686425d28b6e5fa73a15992616b85a5a0278244d5a20a3a17ff3ff8de4cd4
