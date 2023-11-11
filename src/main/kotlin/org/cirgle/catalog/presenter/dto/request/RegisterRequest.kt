@@ -1,9 +1,9 @@
 package org.cirgle.catalog.presenter.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
-import org.cirgle.catalog.presenter.advice.constant.ID_PATTERN
 import org.cirgle.catalog.presenter.advice.constant.PASSWORD_PATTERN
 import org.cirgle.catalog.util.SHA256
 import java.time.LocalDate
@@ -11,7 +11,7 @@ import java.time.LocalDate
 data class RegisterRequest(
     @field:JsonProperty("id")
     @field:NotBlank(message = "invalid-002")
-    @field:Pattern(regexp = ID_PATTERN, message = "invalid-002")
+    @field:Email(message = "invalid-002")
     private val _displayId: String?,
 
     @field:JsonProperty("password")

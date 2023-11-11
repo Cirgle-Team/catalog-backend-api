@@ -11,7 +11,7 @@ enum class ErrorCode(
     USER_PASSWORD_MISMATCH("user-003", "비밀번호가 일치하지 않습니다."),
 
     INVALID("invalid-001", "유효하지 않은 요청입니다."),
-    INVALID_ID("invalid-002", "아이디는 영어, 숫자만 포함한 6자 이상 20자 이하로 입력해주세요."),
+    INVALID_ID("invalid-002", "유효하지 않은 이메일입니다.."),
     INVALID_PASSWORD("invalid-003", "비밀번호는 영어, 숫자, 특수문자를 포함한 8자 이상 20자 이하로 입력해주세요."),
     INVALID_DATE("invalid-004", "날짜 형식이 올바르지 않습니다."),
     INVALID_TOKEN("invalid-005", "유효하지 않은 토큰입니다."),

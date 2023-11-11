@@ -22,10 +22,10 @@ class CaffeineLogScheduler(
     @Scheduled(cron = DAILY_CAFFEINE_LOG_CRON)
     fun dailyLogger() {
         val details = jpaCaffeineLogDetailRepository.findAll()
+        val today = LocalDate.now().minusDays(1)
         details.forEach { detail ->
             val userId = detail.userId
             val todayCaffeineLog = caffeineLogRepository.getTodayCaffeineLog(userId)
-            val today = LocalDate.now().minusDays(1)
 
             val dailyCaffeineLog = todayCaffeineLog.toDailyCaffeineLog(today)
             val isSuccess = dailyCaffeineLog.isSuccess
@@ -33,7 +33,7 @@ class CaffeineLogScheduler(
             caffeineLogRepository.saveDailyCaffeineLog(userId, dailyCaffeineLog)
             jpaCaffeineLogDetailRepository.save(detail.includeSuccess(isSuccess))
         }
-        println("[System]: $DAILY_CAFFEINE_LOG_MESSAGE")
+        println("[System] (${today}): $DAILY_CAFFEINE_LOG_MESSAGE")
     }
 
     private fun TodayCaffeineLog.toDailyCaffeineLog(today: LocalDate): DailyCaffeineLog {
@@ -48,7 +48,6 @@ class CaffeineLogScheduler(
     }
 
     private fun CaffeineLogDetailEntity.includeSuccess(isSuccess: Boolean): CaffeineLogDetailEntity {
-
         return CaffeineLogDetailEntity(
             userId = userId,
             maxCaffeine = maxCaffeine,
@@ -59,6 +58,8 @@ class CaffeineLogScheduler(
 
     companion object {
         internal const val DAILY_CAFFEINE_LOG_CRON = "0 0 0 * * *"
+
+        internal const val TEST_CRON = "*/10 * * * * *"
 
         internal const val DAILY_CAFFEINE_LOG_MESSAGE = "사용자들의 카페인 로그가 기록되었어요."
     }

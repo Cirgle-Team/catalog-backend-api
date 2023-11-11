@@ -1,16 +1,16 @@
 package org.cirgle.catalog.presenter.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
-import org.cirgle.catalog.presenter.advice.constant.ID_PATTERN
 import org.cirgle.catalog.presenter.advice.constant.PASSWORD_PATTERN
 import org.cirgle.catalog.util.SHA256
 
 data class LoginRequest(
     @field:JsonProperty("id")
     @field:NotBlank(message = "user-001")
-    @field:Pattern(regexp = ID_PATTERN, message = "user-001")
+    @field:Email(message = "user-001")
     private val _displayId: String?,
 
     @field:JsonProperty("password")
