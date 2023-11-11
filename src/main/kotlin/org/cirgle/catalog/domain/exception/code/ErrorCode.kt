@@ -20,6 +20,7 @@ enum class ErrorCode(
     MENU_ALREADY_EXISTS("menu-002", "이미 존재하는 메뉴입니다."),
     MENU_NAME("menu-003", "메뉴 이름은 3자 이상 20자 이하로 입력해주세요."),
     MENU_CAFFEINE("menu-004", "카페인은 0 이상 1000 이하로 입력해주세요."),
+    MENU_TYPE("menu-005", "메뉴 타입이 올바르지 않습니다."),
 
 
     FRIEND_NOT_FOUND("friend-001", "친구를 찾을 수 없습니다."),

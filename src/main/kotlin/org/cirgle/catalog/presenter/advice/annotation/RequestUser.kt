@@ -1,6 +1,5 @@
 package org.cirgle.catalog.presenter.advice.annotation
 
-
 import org.cirgle.catalog.config.dto.APIAuthentication
 import org.cirgle.catalog.domain.exception.InvalidException
 import org.springframework.core.MethodParameter

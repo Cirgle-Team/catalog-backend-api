@@ -23,11 +23,11 @@ import java.util.*
 
 @Service
 class UserServiceImpl(
-        private val tokenProvider: JwtTokenProvider,
-        private val userRepository: UserRepository,
-        private val jpaUserDetailRepository: JpaUserDetailRepository,
-        private val jpaUserAccountRepository: JpaUserAccountRepository,
-        private val jpaUserTokenRepository: JpaUserTokenRepository,
+    private val tokenProvider: JwtTokenProvider,
+    private val userRepository: UserRepository,
+    private val jpaUserDetailRepository: JpaUserDetailRepository,
+    private val jpaUserAccountRepository: JpaUserAccountRepository,
+    private val jpaUserTokenRepository: JpaUserTokenRepository,
 ) : UserService {
 
     @Transactional
@@ -38,24 +38,24 @@ class UserServiceImpl(
         val id = UUID.randomUUID()
         val nickname = RandomNickGenerator.generate()
         val userDetail = UserDetailEntity(
-                id = id,
-                displayId = displayId,
-                nickname = nickname,
-                description = "",
-                createdAt = LocalDate.now(),
+            id = id,
+            displayId = displayId,
+            nickname = nickname,
+            description = "",
+            createdAt = LocalDate.now(),
         )
         val userAccount = UserAccountEntity(
-                id = id,
-                displayId = displayId,
-                password = password,
+            id = id,
+            displayId = displayId,
+            password = password,
         )
         jpaUserDetailRepository.save(userDetail)
         jpaUserAccountRepository.save(userAccount)
         return User(
-                id = userDetail.id,
-                displayId = userDetail.displayId,
-                nickname = userDetail.nickname,
-                description = userDetail.description,
+            id = userDetail.id,
+            displayId = userDetail.displayId,
+            nickname = userDetail.nickname,
+            description = userDetail.description,
         )
     }
 
@@ -87,8 +87,8 @@ class UserServiceImpl(
 
     fun createToken(user: User): AuthToken {
         val token = AuthToken(
-                accessToken = tokenProvider.createAccessToken(user),
-                refreshToken = tokenProvider.createRefreshToken(user)
+            accessToken = tokenProvider.createAccessToken(user),
+            refreshToken = tokenProvider.createRefreshToken(user)
         )
         jpaUserTokenRepository.save(token.toUserTokenEntity(user))
         return token
@@ -96,8 +96,8 @@ class UserServiceImpl(
 
     private fun AuthToken.toUserTokenEntity(user: User): UserTokenEntity {
         return UserTokenEntity(
-                id = user.id,
-                refreshToken = this.refreshToken,
+            id = user.id,
+            refreshToken = this.refreshToken,
         )
     }
 }

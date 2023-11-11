@@ -48,6 +48,6 @@ class CaffeineMenuRepositoryImpl(
         userId = userId,
         name = name,
         type = type,
-        caffeine = caffeine
+        caffeine = caffeine,
     )
 }

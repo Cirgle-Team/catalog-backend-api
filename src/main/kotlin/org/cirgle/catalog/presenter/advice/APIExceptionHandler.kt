@@ -1,6 +1,7 @@
 package org.cirgle.catalog.presenter.advice
 
 import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.security.SignatureException
 import org.cirgle.catalog.domain.exception.*
 import org.cirgle.catalog.domain.exception.code.ErrorCode
 import org.cirgle.catalog.presenter.dto.response.ErrorResponse
@@ -27,6 +28,15 @@ class APIExceptionHandler {
             .badRequest()
             .body(
                 errorBody(errorCode)
+            )
+    }
+
+    @ExceptionHandler(value = [SignatureException::class])
+    fun handleSignatureException(exception: SignatureException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .badRequest()
+            .body(
+                errorBody(ErrorCode.INVALID_TOKEN)
             )
     }
 
