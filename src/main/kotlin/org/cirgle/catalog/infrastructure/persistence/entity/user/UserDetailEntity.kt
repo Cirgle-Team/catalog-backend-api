@@ -24,5 +24,8 @@ class UserDetailEntity(
     val description: String,
 
     @Column
+    val birthday: LocalDate,
+
+    @Column
     val createdAt: LocalDate,
 )

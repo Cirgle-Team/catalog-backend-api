@@ -31,7 +31,7 @@ class UserServiceImpl(
 ) : UserService {
 
     @Transactional
-    override fun register(displayId: String, password: String): User {
+    override fun register(displayId: String, password: String, birthday: LocalDate): User {
         if (jpaUserAccountRepository.existsByDisplayId(displayId)) {
             throw UserAlreadyExistsException()
         }
@@ -42,6 +42,7 @@ class UserServiceImpl(
             displayId = displayId,
             nickname = nickname,
             description = "",
+            birthday = birthday,
             createdAt = LocalDate.now(),
         )
         val userAccount = UserAccountEntity(
@@ -55,6 +56,7 @@ class UserServiceImpl(
             id = userDetail.id,
             displayId = userDetail.displayId,
             nickname = userDetail.nickname,
+            birthday = userDetail.birthday,
             description = userDetail.description,
         )
     }

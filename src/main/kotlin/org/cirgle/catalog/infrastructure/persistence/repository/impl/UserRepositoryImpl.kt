@@ -19,6 +19,7 @@ class UserRepositoryImpl(
             displayId = userDetail.displayId,
             nickname = userDetail.nickname,
             description = userDetail.description,
+            birthday = userDetail.birthday,
         )
     }
 
@@ -29,6 +30,7 @@ class UserRepositoryImpl(
             displayId = userDetail.displayId,
             nickname = userDetail.nickname,
             description = userDetail.description,
+            birthday = userDetail.birthday,
         )
     }
 }

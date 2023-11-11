@@ -37,9 +37,4 @@ class CaffeineMenuController(
 
         return APIResponse.ok(code = "success", message = "메뉴가 삭제되었습니다.")
     }
-
-
-    private companion object {
-        const val MAXIMUM_CAFFEINE = 1000
-    }
 }

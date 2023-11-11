@@ -1,5 +1,6 @@
 package org.cirgle.catalog.domain.model
 
+import java.time.LocalDate
 import java.util.*
 
 data class User(
@@ -7,4 +8,5 @@ data class User(
     val displayId: String,
     val nickname: String,
     val description: String,
+    val birthday: LocalDate,
 )
