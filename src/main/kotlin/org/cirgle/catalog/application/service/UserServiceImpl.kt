@@ -10,9 +10,11 @@ import org.cirgle.catalog.domain.repository.UserRepository
 import org.cirgle.catalog.domain.service.UserService
 import org.cirgle.catalog.infrastructure.persistence.entity.user.UserAccountEntity
 import org.cirgle.catalog.infrastructure.persistence.entity.user.UserDetailEntity
+import org.cirgle.catalog.infrastructure.persistence.entity.user.UserProfileEntity
 import org.cirgle.catalog.infrastructure.persistence.entity.user.UserTokenEntity
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserAccountRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserDetailRepository
+import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserProfileRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserTokenRepository
 import org.cirgle.catalog.infrastructure.provider.JwtTokenProvider
 import org.cirgle.catalog.util.RandomNickGenerator
@@ -25,6 +27,7 @@ import java.util.*
 class UserServiceImpl(
     private val tokenProvider: JwtTokenProvider,
     private val userRepository: UserRepository,
+    private val jpaUserProfileRepository: JpaUserProfileRepository,
     private val jpaUserDetailRepository: JpaUserDetailRepository,
     private val jpaUserAccountRepository: JpaUserAccountRepository,
     private val jpaUserTokenRepository: JpaUserTokenRepository,
@@ -50,8 +53,14 @@ class UserServiceImpl(
             displayId = displayId,
             password = password,
         )
+        val userProfile = UserProfileEntity(
+            id = id,
+            profileUrl = "",
+            bannerUrl = "",
+        )
         jpaUserDetailRepository.save(userDetail)
         jpaUserAccountRepository.save(userAccount)
+        jpaUserProfileRepository.save(userProfile)
         return User(
             id = userDetail.id,
             displayId = userDetail.displayId,
