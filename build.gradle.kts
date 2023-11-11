@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.1.5"
@@ -9,7 +10,7 @@ plugins {
 }
 
 group = "org.cirgle"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -33,15 +34,26 @@ dependencies {
 
     //Database
     runtimeOnly("com.mysql:mysql-connector-j")
-}
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
-    }
+    //Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    //Jwt
+    implementation("io.jsonwebtoken:jjwt-api:0.12.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.2")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks{
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
+    }
+
 }
