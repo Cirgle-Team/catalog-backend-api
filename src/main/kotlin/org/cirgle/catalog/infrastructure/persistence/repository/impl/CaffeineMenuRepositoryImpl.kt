@@ -47,6 +47,7 @@ class CaffeineMenuRepositoryImpl(
         id = id,
         userId = userId,
         name = name,
+        type = type,
         caffeine = caffeine
     )
 }

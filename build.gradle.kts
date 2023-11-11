@@ -55,11 +55,5 @@ tasks{
             jvmTarget = "17"
         }
     }
-    withType<BootJar> {
-        manifest {
-            attributes["MainClass"] = "org.cirgle.catalog.CatalogApplicationKt"
-        }
-        from(sourceSets.main.get().output)
-        archiveFileName.set("catalog-backend-api.jar")
-    }
+
 }
