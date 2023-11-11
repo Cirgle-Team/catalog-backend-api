@@ -9,6 +9,7 @@ import org.cirgle.catalog.presenter.advice.annotation.HttpUser
 import org.cirgle.catalog.presenter.advice.annotation.RequestUser
 import org.cirgle.catalog.presenter.dto.request.CaffeineMenuCreateRequest
 import org.cirgle.catalog.presenter.dto.request.CaffeineMenuDeleteRequest
+import org.cirgle.catalog.presenter.dto.response.APIResponse
 import org.cirgle.catalog.presenter.dto.response.CaffeineMenuResponse
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -53,6 +54,7 @@ class CaffeineMenuController(
     private fun CaffeineMenuCreateRequest.toCaffeineMenu() = CaffeineMenu(
         id = UUID.randomUUID(),
         name = name,
+        type = type,
         caffeine = caffeine,
     )
 

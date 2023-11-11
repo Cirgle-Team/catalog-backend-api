@@ -1,10 +1,8 @@
 package org.cirgle.catalog.infrastructure.persistence.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.IdClass
+import jakarta.persistence.*
 import org.cirgle.catalog.domain.model.CaffeineMenu
+import org.cirgle.catalog.domain.model.MenuType
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 import java.io.Serializable
@@ -25,10 +23,15 @@ data class CaffeineMenuEntity(
     val id: UUID,
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    val type: MenuType,
+
+    @Column(nullable = false)
     val caffeine: Int,
 ) {
     fun toDomain() = CaffeineMenu(
         id = this.id,
+        type = this.type,
         name = this.name,
         caffeine = this.caffeine,
     )
