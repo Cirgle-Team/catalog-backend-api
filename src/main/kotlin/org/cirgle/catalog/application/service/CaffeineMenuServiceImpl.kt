@@ -16,20 +16,20 @@ class CaffeineMenuServiceImpl(
 
     override fun initMenu(userId: UUID) {
         val menus = listOf(
-            CaffeineMenu(type=MenuType.COFFEE, name="아메리카노", caffeine=100),
-            CaffeineMenu(type=MenuType.COFFEE, name="카페라떼", caffeine=75),
-            CaffeineMenu(type=MenuType.COFFEE, name="카페모카", caffeine=90),
-            CaffeineMenu(type=MenuType.COFFEE, name="에스프레소", caffeine=40),
+            CaffeineMenu(type = MenuType.COFFEE, name = "아메리카노", caffeine = 100),
+            CaffeineMenu(type = MenuType.COFFEE, name = "카페라떼", caffeine = 75),
+            CaffeineMenu(type = MenuType.COFFEE, name = "카페모카", caffeine = 90),
+            CaffeineMenu(type = MenuType.COFFEE, name = "에스프레소", caffeine = 40),
 
-            CaffeineMenu(type=MenuType.ENERGY_DRINK, name="레드불", caffeine=80),
-            CaffeineMenu(type=MenuType.ENERGY_DRINK, name="몬스터", caffeine=36),
-            CaffeineMenu(type=MenuType.ENERGY_DRINK, name="핫식스", caffeine=100),
+            CaffeineMenu(type = MenuType.ENERGY_DRINK, name = "레드불", caffeine = 80),
+            CaffeineMenu(type = MenuType.ENERGY_DRINK, name = "몬스터", caffeine = 36),
+            CaffeineMenu(type = MenuType.ENERGY_DRINK, name = "핫식스", caffeine = 100),
 
-            CaffeineMenu(type=MenuType.DESSERT, name="티라미수", caffeine=50),
-            CaffeineMenu(type=MenuType.DESSERT, name="초콜릿", caffeine=12),
+            CaffeineMenu(type = MenuType.DESSERT, name = "티라미수", caffeine = 50),
+            CaffeineMenu(type = MenuType.DESSERT, name = "초콜릿", caffeine = 12),
 
-            CaffeineMenu(type=MenuType.ETC, name="밀크티", caffeine=110),
-            CaffeineMenu(type=MenuType.ETC, name="녹차", caffeine=30),
+            CaffeineMenu(type = MenuType.ETC, name = "밀크티", caffeine = 110),
+            CaffeineMenu(type = MenuType.ETC, name = "녹차", caffeine = 30),
         )
         menus.forEach {
             caffeineMenuRepository.create(userId, it)

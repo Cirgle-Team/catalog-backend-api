@@ -5,7 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
-import java.util.UUID
+import java.util.*
 
 @Entity(name = "user_profile")
 data class UserProfileEntity(

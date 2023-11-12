@@ -1,7 +1,6 @@
 package org.cirgle.catalog.domain.service
 
 import org.cirgle.catalog.domain.model.CaffeineMenu
-import org.cirgle.catalog.domain.model.MenuType
 import java.util.*
 
 interface CaffeineMenuService {

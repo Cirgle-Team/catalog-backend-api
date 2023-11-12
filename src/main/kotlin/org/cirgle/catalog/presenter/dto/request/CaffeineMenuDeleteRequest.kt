@@ -2,7 +2,6 @@ package org.cirgle.catalog.presenter.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
-import java.util.*
 
 data class CaffeineMenuDeleteRequest(
     @field:JsonProperty("menu")

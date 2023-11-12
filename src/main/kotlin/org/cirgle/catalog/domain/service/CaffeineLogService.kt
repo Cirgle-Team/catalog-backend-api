@@ -16,7 +16,12 @@ interface CaffeineLogService {
 
     fun getCaffeineLogDetail(userId: UUID): CaffeineLogDetail
 
-    fun findAllConsumedMenuType(userId: UUID, menuType: MenuType, start: LocalDate, end: LocalDate): List<ConsumedMenuType>
+    fun findAllConsumedMenuType(
+        userId: UUID,
+        menuType: MenuType,
+        start: LocalDate,
+        end: LocalDate
+    ): List<ConsumedMenuType>
 
     fun findAllCaffeineLog(userId: UUID, start: LocalDate, end: LocalDate): List<DailyCaffeineLog>
 

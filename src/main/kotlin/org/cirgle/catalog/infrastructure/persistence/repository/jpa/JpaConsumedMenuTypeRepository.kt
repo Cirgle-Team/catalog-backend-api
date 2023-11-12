@@ -5,12 +5,17 @@ import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTyp
 import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntityKey
 import org.springframework.data.jpa.repository.JpaRepository
 import java.time.LocalDate
-import java.util.UUID
+import java.util.*
 
 interface JpaConsumedMenuTypeRepository : JpaRepository<ConsumedMenuTypeEntity, ConsumedMenuTypeEntityKey> {
 
     fun findByUserIdAndMenuTypeAndDate(userId: UUID, menuType: MenuType, date: LocalDate): ConsumedMenuTypeEntity?
 
-    fun findAllByUserIdAndMenuTypeAndDateBetween(userId: UUID, menuType: MenuType, start: LocalDate, end: LocalDate): List<ConsumedMenuTypeEntity>
+    fun findAllByUserIdAndMenuTypeAndDateBetween(
+        userId: UUID,
+        menuType: MenuType,
+        start: LocalDate,
+        end: LocalDate
+    ): List<ConsumedMenuTypeEntity>
 
 }

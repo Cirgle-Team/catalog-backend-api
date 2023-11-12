@@ -23,7 +23,8 @@ class CaffeineMenuRepositoryImpl(
 
 
     override fun get(userId: UUID, menuName: String): CaffeineMenu {
-        return jpaCaffeineMenuRepository.findByUserIdAndName(userId, menuName)?.toDomain() ?: throw MenuNotFoundException()
+        return jpaCaffeineMenuRepository.findByUserIdAndName(userId, menuName)?.toDomain()
+            ?: throw MenuNotFoundException()
     }
 
     override fun exists(userId: UUID, menuName: String): Boolean {

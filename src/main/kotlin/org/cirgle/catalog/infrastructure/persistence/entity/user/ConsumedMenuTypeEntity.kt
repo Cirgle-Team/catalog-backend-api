@@ -7,7 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 import java.io.Serializable
 import java.time.LocalDate
-import java.util.UUID
+import java.util.*
 
 @Entity(name = "consumed_menu_type")
 @Table(indexes = [Index(name = "idx_date", columnList = "date")])
@@ -27,8 +27,7 @@ data class ConsumedMenuTypeEntity(
     @Column(nullable = false)
     val consumedCaffeine: Int = 0,
 ) {
-    fun toDomain()
-    = ConsumedMenuType(
+    fun toDomain() = ConsumedMenuType(
         date = date,
         menuType = menuType,
         caffeine = consumedCaffeine

@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank
 import org.cirgle.catalog.domain.exception.MenuCaffeineException
 import org.cirgle.catalog.domain.model.MenuType
 import org.cirgle.catalog.presenter.advice.annotation.ValidEnum
-import org.springframework.data.convert.ValueConverter
-import java.util.UUID
 
 data class CaffeineMenuConsumeRequest(
     @field:JsonProperty("menu")

@@ -3,9 +3,7 @@ package org.cirgle.catalog.presenter.controller
 import org.cirgle.catalog.domain.exception.InvalidException
 import org.cirgle.catalog.domain.exception.MenuCaffeineException
 import org.cirgle.catalog.domain.exception.UserNotFoundException
-import org.cirgle.catalog.domain.model.CaffeineLogDetail
 import org.cirgle.catalog.domain.model.CaffeineMenu
-import org.cirgle.catalog.domain.model.TodayCaffeineLog
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.domain.service.CaffeineMenuService
 import org.cirgle.catalog.domain.service.UserService
@@ -18,7 +16,6 @@ import org.cirgle.catalog.presenter.dto.response.DailyCaffeineLogResponse
 import org.cirgle.catalog.presenter.dto.response.TodayCaffeineLogResponse
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
-import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/caffeine-log")
@@ -101,8 +98,7 @@ class CaffeineLogController(
         )
     }
 
-    private fun CaffeineMenuConsumeRequest.toCaffeineMenu(): CaffeineMenu
-    = CaffeineMenu(
+    private fun CaffeineMenuConsumeRequest.toCaffeineMenu(): CaffeineMenu = CaffeineMenu(
         name = menu,
         type = type,
         caffeine = caffeine

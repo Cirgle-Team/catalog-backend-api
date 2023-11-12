@@ -6,7 +6,6 @@ import org.cirgle.catalog.domain.repository.CaffeineLogRepository
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.infrastructure.persistence.entity.CaffeineLogDetailEntity
 import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntity
-import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntityKey
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaCaffeineLogDetailRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaConsumedMenuTypeRepository
 import org.springframework.beans.factory.annotation.Value
@@ -60,9 +59,10 @@ class CaffeineLogServiceImpl(
             consumedCaffeine = todayCaffeineLog.consumedCaffeine + caffeineMenu.caffeine
         )
 
-        val consumedMenuType = jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, LocalDate.now())
-            ?: ConsumedMenuTypeEntity(userId = userId, menuType = caffeineMenu.type, date = LocalDate.now())
-        val newConsumedMenuType =  consumedMenuType.copy(
+        val consumedMenuType =
+            jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, LocalDate.now())
+                ?: ConsumedMenuTypeEntity(userId = userId, menuType = caffeineMenu.type, date = LocalDate.now())
+        val newConsumedMenuType = consumedMenuType.copy(
             consumedCaffeine = consumedMenuType.consumedCaffeine + caffeineMenu.caffeine
         )
         jpaConsumedMenuTypeRepository.save(newConsumedMenuType)
