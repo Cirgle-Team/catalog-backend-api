@@ -61,7 +61,7 @@ class CaffeineLogServiceImpl(
 
         val consumedMenuType =
             jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, LocalDate.now())
-                ?: ConsumedMenuTypeEntity(userId = userId, menuType = caffeineMenu.type, date = LocalDate.now())
+                ?: ConsumedMenuTypeEntity(userId = userId, date = LocalDate.now(), menuType = caffeineMenu.type)
         val newConsumedMenuType = consumedMenuType.copy(
             consumedCaffeine = consumedMenuType.consumedCaffeine + caffeineMenu.caffeine
         )

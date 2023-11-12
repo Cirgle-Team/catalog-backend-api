@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.util.*
 
 @Entity(name = "consumed_menu_type")
-@Table(indexes = [Index(name = "idx_date", columnList = "date")])
+@Table(indexes = [Index(name = "idx_menu_type", columnList = "menuType")])
 @IdClass(ConsumedMenuTypeEntityKey::class)
 data class ConsumedMenuTypeEntity(
     @Id
@@ -18,11 +18,12 @@ data class ConsumedMenuTypeEntity(
     val userId: UUID,
 
     @Id
+    val date: LocalDate,
+
+    @Id
     @Enumerated(EnumType.STRING)
     val menuType: MenuType,
 
-    @Column(nullable = false)
-    val date: LocalDate,
 
     @Column(nullable = false)
     val consumedCaffeine: Int = 0,
@@ -37,4 +38,5 @@ data class ConsumedMenuTypeEntity(
 data class ConsumedMenuTypeEntityKey(
     val userId: UUID = UUID.randomUUID(),
     val menuType: MenuType = MenuType.ETC,
+    val date: LocalDate = LocalDate.now()
 ) : Serializable
