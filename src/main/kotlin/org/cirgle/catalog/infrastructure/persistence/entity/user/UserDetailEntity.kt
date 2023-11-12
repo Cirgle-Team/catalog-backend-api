@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.util.*
 
 @Entity(name = "user_detail")
-class UserDetailEntity(
+data class UserDetailEntity(
     @Id
     @JdbcTypeCode(SqlTypes.UUID)
     val id: UUID,
