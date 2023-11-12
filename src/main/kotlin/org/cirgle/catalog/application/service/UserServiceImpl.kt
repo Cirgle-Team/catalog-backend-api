@@ -9,10 +9,7 @@ import org.cirgle.catalog.domain.model.User
 import org.cirgle.catalog.domain.model.UserProfile
 import org.cirgle.catalog.domain.repository.UserRepository
 import org.cirgle.catalog.domain.service.UserService
-import org.cirgle.catalog.infrastructure.persistence.entity.user.UserAccountEntity
-import org.cirgle.catalog.infrastructure.persistence.entity.user.UserDetailEntity
-import org.cirgle.catalog.infrastructure.persistence.entity.user.UserProfileEntity
-import org.cirgle.catalog.infrastructure.persistence.entity.user.UserTokenEntity
+import org.cirgle.catalog.infrastructure.persistence.entity.user.*
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserAccountRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserDetailRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserProfileRepository
@@ -118,9 +115,15 @@ class UserServiceImpl(
     @Transactional
     override fun refreshToken(refreshToken: String): AuthToken {
         val userId = tokenProvider.getIdFromToken(refreshToken) ?: throw InvalidException()
-        val user = userRepository.findUserById(userId) ?: throw UserNotFoundException()
+        if (!jpaUserTokenRepository.existsById(UserTokenEntityKey(userId, refreshToken))) {
+            throw InvalidException()
+        }
 
-        return createToken(user)
+        val user = userRepository.findUserById(userId) ?: throw UserNotFoundException()
+        return AuthToken(
+            accessToken = tokenProvider.createAccessToken(user),
+            refreshToken = refreshToken
+        )
     }
 
     fun createToken(user: User): AuthToken {
