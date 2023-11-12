@@ -126,6 +126,11 @@ class UserServiceImpl(
         )
     }
 
+    @Transactional
+    override fun logout(userId: UUID) {
+        jpaUserTokenRepository.deleteAllById(userId)
+    }
+
     fun createToken(user: User): AuthToken {
         val token = AuthToken(
             accessToken = tokenProvider.createAccessToken(user),

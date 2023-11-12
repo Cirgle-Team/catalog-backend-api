@@ -4,12 +4,15 @@ import jakarta.validation.Valid
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.domain.service.CaffeineMenuService
 import org.cirgle.catalog.domain.service.UserService
+import org.cirgle.catalog.presenter.advice.annotation.HttpUser
+import org.cirgle.catalog.presenter.advice.annotation.RequestUser
 import org.cirgle.catalog.presenter.dto.request.EchoRequest
 import org.cirgle.catalog.presenter.dto.request.LoginRequest
 import org.cirgle.catalog.presenter.dto.request.RefreshTokenRequest
 import org.cirgle.catalog.presenter.dto.request.RegisterRequest
 import org.cirgle.catalog.presenter.dto.response.APIResponse
 import org.cirgle.catalog.presenter.dto.response.TokenResponse
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -43,8 +46,9 @@ class AuthController(
         return TokenResponse(token = token)
     }
 
-    @PostMapping("/echo")
-    fun echo(@RequestBody request: EchoRequest): EchoRequest {
-        return request
+    @GetMapping("/logout")
+    fun logout(@RequestUser user: HttpUser): APIResponse {
+        userService.logout(userId = user.id)
+        return APIResponse.ok("success", "로그아웃 되었습니다.")
     }
 }

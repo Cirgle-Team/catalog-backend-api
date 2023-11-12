@@ -45,7 +45,6 @@ class WebSecurityConfig(
                     .requestMatchers("/login").anonymous()
                     .requestMatchers("/register").anonymous()
                     .requestMatchers("/refresh").permitAll()
-                    .requestMatchers("/echo").permitAll()
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)

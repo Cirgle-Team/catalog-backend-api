@@ -5,4 +5,6 @@ import org.cirgle.catalog.infrastructure.persistence.entity.user.UserTokenEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface JpaUserTokenRepository : JpaRepository<UserTokenEntity, UserTokenEntityKey>
+interface JpaUserTokenRepository : JpaRepository<UserTokenEntity, UserTokenEntityKey> {
+    fun deleteAllById(id: UUID)
+}

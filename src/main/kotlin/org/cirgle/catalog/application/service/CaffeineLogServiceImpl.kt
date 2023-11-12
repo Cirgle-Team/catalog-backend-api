@@ -6,8 +6,10 @@ import org.cirgle.catalog.domain.repository.CaffeineLogRepository
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.infrastructure.persistence.entity.CaffeineLogDetailEntity
 import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntity
+import org.cirgle.catalog.infrastructure.persistence.entity.user.UserDetailEntity
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaCaffeineLogDetailRepository
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaConsumedMenuTypeRepository
+import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaUserDetailRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,8 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Service
 class CaffeineLogServiceImpl(
-    @Value("\${app.settings.default-max-caffeine}")
-    private val defaultMaxCaffeine: Int,
+    private val jpaUserDetailRepository: JpaUserDetailRepository,
     private val jpaCaffeineLogDetailRepository: JpaCaffeineLogDetailRepository,
     private val jpaConsumedMenuTypeRepository: JpaConsumedMenuTypeRepository,
     private val caffeineLogRepository: CaffeineLogRepository,
@@ -26,10 +27,19 @@ class CaffeineLogServiceImpl(
 
     @Transactional
     override fun initializeCaffeineLog(userId: UUID) {
+
+        val userDetail: UserDetailEntity = jpaUserDetailRepository.findById(userId).getOrNull()
+            ?: throw UserNotFoundException()
+
+        val maxCaffeine = if(LocalDate.now().year - userDetail.birthday.year < 14) 100
+                            else if(LocalDate.now().year - userDetail.birthday.year < 19) 150
+                            else if(LocalDate.now().year - userDetail.birthday.year < 65) 300
+                            else 200
+
         val todayCaffeineLog = TodayCaffeineLog(
             lastCommitted = LocalDate.now().minusDays(1),
             consumedCaffeine = 0,
-            maxCaffeine = defaultMaxCaffeine,
+            maxCaffeine = maxCaffeine,
         )
         caffeineLogRepository.updateTodayCaffeineLog(userId, todayCaffeineLog)
 

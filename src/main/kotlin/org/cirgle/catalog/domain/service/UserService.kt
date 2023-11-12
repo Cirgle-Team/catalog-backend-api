@@ -20,5 +20,7 @@ interface UserService {
 
     fun refreshToken(refreshToken: String): AuthToken
 
+    fun logout(userId: UUID)
+
     fun findUserByDisplayId(displayId: String): User?
 }
