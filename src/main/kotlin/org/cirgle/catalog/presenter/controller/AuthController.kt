@@ -2,6 +2,7 @@ package org.cirgle.catalog.presenter.controller
 
 import jakarta.validation.Valid
 import org.cirgle.catalog.domain.service.CaffeineLogService
+import org.cirgle.catalog.domain.service.CaffeineMenuService
 import org.cirgle.catalog.domain.service.UserService
 import org.cirgle.catalog.presenter.advice.annotation.HttpUser
 import org.cirgle.catalog.presenter.advice.annotation.RequestUser
@@ -19,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class AuthController(
     private val caffeineLogService: CaffeineLogService,
+    private val caffeineMenuService: CaffeineMenuService,
     private val userService: UserService,
 ) {
     @PostMapping("/register")
     fun register(@Valid @RequestBody request: RegisterRequest): APIResponse {
         val user = userService.register(request.displayId, request.password, request.birthday)
         caffeineLogService.initializeCaffeineLog(user.id)
+        caffeineMenuService.initMenu(user.id)
 
         return APIResponse.ok(code = "success", message = "회원가입이 완료되었습니다.")
     }

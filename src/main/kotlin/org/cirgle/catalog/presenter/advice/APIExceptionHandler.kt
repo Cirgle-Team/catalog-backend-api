@@ -31,6 +31,15 @@ class APIExceptionHandler {
             )
     }
 
+    @ExceptionHandler(value = [IllegalArgumentException::class])
+    fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .badRequest()
+            .body(
+                errorBody(ErrorCode.INVALID)
+            )
+    }
+
     @ExceptionHandler(value = [SignatureException::class])
     fun handleSignatureException(exception: SignatureException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
@@ -128,6 +137,15 @@ class APIExceptionHandler {
 
     @ExceptionHandler(value = [MenuCaffeineException::class])
     fun handleMenuCaffeineException(exception: MenuCaffeineException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .badRequest()
+            .body(
+                errorBody(exception.errorCode)
+            )
+    }
+
+    @ExceptionHandler(value = [MenuTypeException::class])
+    fun handleMenuTypeException(exception: MenuTypeException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .badRequest()
             .body(
