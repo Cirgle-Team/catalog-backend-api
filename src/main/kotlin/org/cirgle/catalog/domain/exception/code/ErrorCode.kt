@@ -24,7 +24,8 @@ enum class ErrorCode(
 
 
     FRIEND_NOT_FOUND("friend-001", "친구를 찾을 수 없습니다."),
-    FRIEND_ALREADY_EXISTS("friend-002", "이미 등록된 친구입니다.")
+    FRIEND_ALREADY_EXISTS("friend-002", "이미 등록된 친구입니다."),
+    FRIEND_ADD_SELF("friend-003", "자기 자신을 친구로 등록할 수 없습니다."),
     ;
 
     companion object {

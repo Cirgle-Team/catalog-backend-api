@@ -171,6 +171,15 @@ class APIExceptionHandler {
             )
     }
 
+    @ExceptionHandler(value = [FriendAddSelfException::class])
+    fun handleFriendAddSelfException(exception: FriendAddSelfException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .badRequest()
+            .body(
+                errorBody(exception.errorCode)
+            )
+    }
+
     @ExceptionHandler(value = [InvalidException::class])
     fun handleInvalidException(exception: InvalidException): ResponseEntity<ErrorResponse> {
         return ResponseEntity

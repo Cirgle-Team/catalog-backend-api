@@ -1,5 +1,6 @@
 package org.cirgle.catalog.presenter.controller
 
+import org.cirgle.catalog.domain.exception.FriendAddSelfException
 import org.cirgle.catalog.domain.exception.UserNotFoundException
 import org.cirgle.catalog.domain.service.FriendService
 import org.cirgle.catalog.domain.service.UserService
@@ -42,6 +43,7 @@ class FriendController(
     ): APIResponse {
         val target = userService.findUserByDisplayId(request.displayId)
             ?: throw UserNotFoundException()
+        if(user.id == target.id) throw FriendAddSelfException()
         friendService.addFriend(user.id, target.id)
 
         return APIResponse.ok("success", "성공적으로 친구를 추가했습니다.")
