@@ -90,9 +90,10 @@ class UserServiceImpl(
         return userRepository.findUserByDisplayId(displayId)
     }
 
-    fun refreshToken(refreshToken: String): AuthToken {
+    override fun refreshToken(refreshToken: String): AuthToken {
         val userId = tokenProvider.getIdFromToken(refreshToken) ?: throw InvalidException()
         val user = userRepository.findUserById(userId) ?: throw UserNotFoundException()
+
         return createToken(user)
     }
 

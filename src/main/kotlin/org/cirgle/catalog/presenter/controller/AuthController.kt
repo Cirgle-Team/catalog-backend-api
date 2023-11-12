@@ -1,12 +1,17 @@
 package org.cirgle.catalog.presenter.controller
 
 import jakarta.validation.Valid
-import org.cirgle.catalog.domain.model.AuthToken
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.domain.service.UserService
+import org.cirgle.catalog.presenter.advice.annotation.HttpUser
+import org.cirgle.catalog.presenter.advice.annotation.RequestUser
+import org.cirgle.catalog.presenter.dto.request.EchoRequest
 import org.cirgle.catalog.presenter.dto.request.LoginRequest
+import org.cirgle.catalog.presenter.dto.request.RefreshTokenRequest
 import org.cirgle.catalog.presenter.dto.request.RegisterRequest
 import org.cirgle.catalog.presenter.dto.response.APIResponse
+import org.cirgle.catalog.presenter.dto.response.TokenResponse
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -25,7 +30,21 @@ class AuthController(
     }
 
     @PostMapping("/login")
-    fun login(@Valid @RequestBody request: LoginRequest): AuthToken {
-        return userService.login(displayId = request.displayId, password = request.password)
+    fun login(@Valid @RequestBody request: LoginRequest): TokenResponse {
+        val token = userService.login(displayId = request.displayId, password = request.password)
+
+        return TokenResponse(token = token)
+    }
+
+    @PostMapping("/refresh")
+    fun refresh(@RequestBody request: RefreshTokenRequest): TokenResponse {
+        val token = userService.refreshToken(refreshToken = request.refreshToken)
+
+        return TokenResponse(token = token)
+    }
+
+    @PostMapping("/echo")
+    fun echo(@RequestBody request: EchoRequest): EchoRequest {
+        return request
     }
 }

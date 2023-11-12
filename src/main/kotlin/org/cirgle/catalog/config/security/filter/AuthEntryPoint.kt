@@ -28,6 +28,6 @@ class AuthEntryPoint(
         response: HttpServletResponse,
         authException: AuthenticationException?
     ) {
-        writeErrorResponse(response = response)
+        writeErrorResponse(response)
     }
 }

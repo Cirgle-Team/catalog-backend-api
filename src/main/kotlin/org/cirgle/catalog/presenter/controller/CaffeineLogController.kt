@@ -13,7 +13,9 @@ import org.cirgle.catalog.presenter.advice.annotation.HttpUser
 import org.cirgle.catalog.presenter.advice.annotation.RequestUser
 import org.cirgle.catalog.presenter.dto.request.CaffeineMenuConsumeRequest
 import org.cirgle.catalog.presenter.dto.response.APIResponse
+import org.cirgle.catalog.presenter.dto.response.CaffeineLogDetailResponse
 import org.cirgle.catalog.presenter.dto.response.DailyCaffeineLogResponse
+import org.cirgle.catalog.presenter.dto.response.TodayCaffeineLogResponse
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.util.UUID
@@ -26,16 +28,18 @@ class CaffeineLogController(
     private val caffeineLogService: CaffeineLogService,
 ) {
     @GetMapping
-    fun getCaffeineLogDetail(@RequestUser user: HttpUser): CaffeineLogDetail {
+    fun getCaffeineLogDetail(@RequestUser user: HttpUser): CaffeineLogDetailResponse {
+        val caffeineLogDetail = caffeineLogService.getCaffeineLogDetail(user.id)
 
-        return caffeineLogService.getCaffeineLogDetail(user.id)
+        return CaffeineLogDetailResponse(caffeineLogDetail = caffeineLogDetail)
     }
 
     @GetMapping("/{displayId}")
-    fun getCaffeineLogDetail(@PathVariable displayId: String): CaffeineLogDetail {
+    fun getCaffeineLogDetail(@PathVariable displayId: String): CaffeineLogDetailResponse {
         val target = userService.findUserByDisplayId(displayId) ?: throw UserNotFoundException()
+        val caffeineLogDetail = caffeineLogService.getCaffeineLogDetail(target.id)
 
-        return caffeineLogService.getCaffeineLogDetail(target.id)
+        return CaffeineLogDetailResponse(caffeineLogDetail = caffeineLogDetail)
     }
 
     @PostMapping
@@ -53,16 +57,18 @@ class CaffeineLogController(
     }
 
     @GetMapping("/today")
-    fun getTodayCaffeineLog(@RequestUser user: HttpUser): TodayCaffeineLog {
+    fun getTodayCaffeineLog(@RequestUser user: HttpUser): TodayCaffeineLogResponse {
+        val todayCaffeineLog = caffeineLogService.getTodayCaffeineLog(user.id)
 
-        return caffeineLogService.getTodayCaffeineLog(user.id)
+        return TodayCaffeineLogResponse(caffeineLog = todayCaffeineLog)
     }
 
     @GetMapping("/today/{displayId}")
-    fun getTodayCaffeineLog(@PathVariable displayId: String): TodayCaffeineLog {
+    fun getTodayCaffeineLog(@PathVariable displayId: String): TodayCaffeineLogResponse {
         val target = userService.findUserByDisplayId(displayId) ?: throw UserNotFoundException()
+        val todayCaffeineLog = caffeineLogService.getTodayCaffeineLog(target.id)
 
-        return caffeineLogService.getTodayCaffeineLog(target.id)
+        return TodayCaffeineLogResponse(caffeineLog = todayCaffeineLog)
     }
 
     @GetMapping("/daily")

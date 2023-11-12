@@ -13,5 +13,7 @@ interface UserService {
 
     fun getUserById(userId: UUID): User
 
+    fun refreshToken(refreshToken: String): AuthToken
+
     fun findUserByDisplayId(displayId: String): User?
 }

@@ -33,7 +33,7 @@ class RequestUserArgumentResolver : HandlerMethodArgumentResolver {
 
         return HttpUser(
             id = UUID.fromString(authorization.name),
-            remoteAddr = authorization.getRemoteAddr()
+            remoteAddr = authorization.getRemoteAddr(),
         )
     }
 }
