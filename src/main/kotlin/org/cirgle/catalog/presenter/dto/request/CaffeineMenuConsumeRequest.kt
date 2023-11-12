@@ -2,6 +2,7 @@ package org.cirgle.catalog.presenter.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
+import org.cirgle.catalog.domain.exception.MenuCaffeineException
 import org.cirgle.catalog.domain.model.MenuType
 import org.cirgle.catalog.presenter.advice.annotation.ValidEnum
 import org.springframework.data.convert.ValueConverter
@@ -25,5 +26,5 @@ data class CaffeineMenuConsumeRequest(
 
     val type: MenuType get() = MenuType.valueOf(_type!!)
 
-    val caffeine: Int get() = _caffeine!!
+    val caffeine: Int get() = _caffeine ?: throw MenuCaffeineException()
 }

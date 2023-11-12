@@ -1,14 +1,14 @@
 package org.cirgle.catalog.application.service
 
 import org.cirgle.catalog.domain.exception.UserNotFoundException
-import org.cirgle.catalog.domain.model.CaffeineLogDetail
-import org.cirgle.catalog.domain.model.CaffeineMenu
-import org.cirgle.catalog.domain.model.DailyCaffeineLog
-import org.cirgle.catalog.domain.model.TodayCaffeineLog
+import org.cirgle.catalog.domain.model.*
 import org.cirgle.catalog.domain.repository.CaffeineLogRepository
 import org.cirgle.catalog.domain.service.CaffeineLogService
 import org.cirgle.catalog.infrastructure.persistence.entity.CaffeineLogDetailEntity
+import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntity
+import org.cirgle.catalog.infrastructure.persistence.entity.user.ConsumedMenuTypeEntityKey
 import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaCaffeineLogDetailRepository
+import org.cirgle.catalog.infrastructure.persistence.repository.jpa.JpaConsumedMenuTypeRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +21,7 @@ class CaffeineLogServiceImpl(
     @Value("\${app.settings.default-max-caffeine}")
     private val defaultMaxCaffeine: Int,
     private val jpaCaffeineLogDetailRepository: JpaCaffeineLogDetailRepository,
+    private val jpaConsumedMenuTypeRepository: JpaConsumedMenuTypeRepository,
     private val caffeineLogRepository: CaffeineLogRepository,
 ) : CaffeineLogService {
 
@@ -51,12 +52,20 @@ class CaffeineLogServiceImpl(
         )
     }
 
+    @Transactional
     override fun consumeCaffeineMenu(userId: UUID, caffeineMenu: CaffeineMenu) {
         val todayCaffeineLog = caffeineLogRepository.getTodayCaffeineLog(userId)
         val newTodayCaffeineLog = todayCaffeineLog.copy(
             lastCommitted = LocalDate.now(),
             consumedCaffeine = todayCaffeineLog.consumedCaffeine + caffeineMenu.caffeine
         )
+
+        val consumedMenuType = jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, LocalDate.now())
+            ?: ConsumedMenuTypeEntity(userId = userId, menuType = caffeineMenu.type, date = LocalDate.now())
+        val newConsumedMenuType =  consumedMenuType.copy(
+            consumedCaffeine = consumedMenuType.consumedCaffeine + caffeineMenu.caffeine
+        )
+        jpaConsumedMenuTypeRepository.save(newConsumedMenuType)
         caffeineLogRepository.updateTodayCaffeineLog(userId, newTodayCaffeineLog)
     }
 
@@ -69,8 +78,20 @@ class CaffeineLogServiceImpl(
             ?: throw UserNotFoundException()
     }
 
-    override fun findAllCaffeineLog(userId: UUID, start: LocalDate, end: LocalDate): List<DailyCaffeineLog> {
+    override fun findAllConsumedMenuType(
+        userId: UUID,
+        menuType: MenuType,
+        start: LocalDate,
+        end: LocalDate
+    ): List<ConsumedMenuType> {
+        return jpaConsumedMenuTypeRepository
+            .findAllByUserIdAndMenuTypeAndDateBetween(userId, menuType, start, end)
+            .map {
+                it.toDomain()
+            }
+    }
 
+    override fun findAllCaffeineLog(userId: UUID, start: LocalDate, end: LocalDate): List<DailyCaffeineLog> {
         return caffeineLogRepository.findAllCaffeineLog(userId, start, end)
     }
 

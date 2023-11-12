@@ -1,9 +1,6 @@
 package org.cirgle.catalog.domain.service
 
-import org.cirgle.catalog.domain.model.CaffeineLogDetail
-import org.cirgle.catalog.domain.model.CaffeineMenu
-import org.cirgle.catalog.domain.model.DailyCaffeineLog
-import org.cirgle.catalog.domain.model.TodayCaffeineLog
+import org.cirgle.catalog.domain.model.*
 import java.time.LocalDate
 import java.util.*
 
@@ -18,6 +15,8 @@ interface CaffeineLogService {
     fun getTodayCaffeineLog(userId: UUID): TodayCaffeineLog
 
     fun getCaffeineLogDetail(userId: UUID): CaffeineLogDetail
+
+    fun findAllConsumedMenuType(userId: UUID, menuType: MenuType, start: LocalDate, end: LocalDate): List<ConsumedMenuType>
 
     fun findAllCaffeineLog(userId: UUID, start: LocalDate, end: LocalDate): List<DailyCaffeineLog>
 
