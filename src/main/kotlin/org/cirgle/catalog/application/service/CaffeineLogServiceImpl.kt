@@ -63,15 +63,19 @@ class CaffeineLogServiceImpl(
 
     @Transactional
     override fun consumeCaffeineMenu(userId: UUID, caffeineMenu: CaffeineMenu) {
-        val todayCaffeineLog = caffeineLogRepository.getTodayCaffeineLog(userId)
-        val newTodayCaffeineLog = todayCaffeineLog.copy(
-            lastCommitted = LocalDate.now(),
-            consumedCaffeine = todayCaffeineLog.consumedCaffeine + caffeineMenu.caffeine
-        )
 
+        val today = LocalDate.now()
+        val todayCaffeineLog = caffeineLogRepository.getTodayCaffeineLog(userId)
+
+        val newTodayCaffeineLog = todayCaffeineLog.copy(
+            lastCommitted = today,
+            consumedCaffeine = (if(todayCaffeineLog.lastCommitted == LocalDate.now())
+                todayCaffeineLog.consumedCaffeine else 0) + caffeineMenu.caffeine
+        )
         val consumedMenuType =
-            jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, LocalDate.now())
-                ?: ConsumedMenuTypeEntity(userId = userId, date = LocalDate.now(), menuType = caffeineMenu.type)
+            jpaConsumedMenuTypeRepository.findByUserIdAndMenuTypeAndDate(userId, caffeineMenu.type, today)
+                ?: ConsumedMenuTypeEntity(userId = userId, date = today, menuType = caffeineMenu.type)
+
         val newConsumedMenuType = consumedMenuType.copy(
             consumedCaffeine = consumedMenuType.consumedCaffeine + caffeineMenu.caffeine
         )

@@ -45,7 +45,6 @@ class CaffeineLogRepositoryImpl(
         val maxCaffeine = jpaCaffeineLogDetailRepository.getMaxCaffeineByUserId(userId)
         val todayCaffeineLog = jpaTodayCaffeineLogRepository.findById(userId).getOrNull()
             ?: throw UserNotFoundException()
-
         return TodayCaffeineLog(
             lastCommitted = todayCaffeineLog.lastCommitted,
             consumedCaffeine = todayCaffeineLog.consumedCaffeine,

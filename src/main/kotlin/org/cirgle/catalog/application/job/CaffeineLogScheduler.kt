@@ -30,6 +30,9 @@ class CaffeineLogScheduler(
             val dailyCaffeineLog = todayCaffeineLog.toDailyCaffeineLog(today)
             val isSuccess = dailyCaffeineLog.isSuccess
 
+            caffeineLogRepository.updateTodayCaffeineLog(userId, todayCaffeineLog.copy(
+                consumedCaffeine = 0
+            ))
             caffeineLogRepository.saveDailyCaffeineLog(userId, dailyCaffeineLog)
             jpaCaffeineLogDetailRepository.save(detail.includeSuccess(isSuccess))
         }

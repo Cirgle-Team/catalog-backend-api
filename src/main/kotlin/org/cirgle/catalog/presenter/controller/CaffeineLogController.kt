@@ -50,6 +50,7 @@ class CaffeineLogController(
         val menu = request.toCaffeineMenu()
         caffeineMenuService.createMenu(user.id, menu)
         caffeineLogService.consumeCaffeineMenu(user.id, menu)
+
         return APIResponse.ok(code = "success", message = "카페인 메뉴 소비를 성공적으로 완료했습니다.")
     }
 
